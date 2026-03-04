@@ -1,0 +1,13 @@
+{
+    "eventTitle" : "Test Event",
+    "eventDescription" : "Test Event Description",
+    "city" : "chennai",
+    "venue" :"Test Venue",
+    "dateTime" : "2027-01-01T10:00",
+    "price" : "100",
+    "seats" : "25",
+    "ticketCount" : "1",
+    "name" : "Test booking name",
+    "email" : "testbook@test.com",
+    "phone" : "9999999999"
+}
