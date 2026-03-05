@@ -23,7 +23,7 @@ class BookTicket{
     }
 
     async getBookingReference(){
-        this.bookingRefNum = await this.page.locator('.booking-ref').textContent();
+        return (await this.page.locator('.booking-ref').textContent() );
     }
 
 

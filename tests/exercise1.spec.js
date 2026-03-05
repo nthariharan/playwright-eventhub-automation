@@ -35,9 +35,9 @@ test("Create Event & Book Seat", async ({ page }) => {
     await events.navbar.events.click();
     await expect(events.eventCards.first()).toBeVisible();
 
-    const[currentEvent,btnBookNow] = await events.getEvent(adminEvents.eventTitle);
+    const {currentEvent,btnBookNow} = await events.getEvent(adminEvents.eventTitle);
     await expect(currentEvent).toBeVisible();
-    await events.getAvailableSeats();
+    const seatsBeforeBooking = await events.getAvailableSeats(currentEvent);
     await btnBookNow.click();
 
     //Enter user details, book a seat & Get the reference number
@@ -45,15 +45,22 @@ test("Create Event & Book Seat", async ({ page }) => {
     await expect(bookTicket.ticketCount).toHaveText('1');
     await bookTicket.fillBookingDetails();
     await expect(bookTicket.bookingConfirmedText).toBeVisible();
-    await bookTicket.getBookingReference();
+    const bookingRefNum = await bookTicket.getBookingReference();
     await bookTicket.btnMyBookings.click();
 
     //Verify bookings made is for the same event
-    await page.waitForLoadState('load');
+    //await page.waitForLoadState('load');
+    await expect(page).toHaveURL('/bookings');
+    await expect(bookings.bookingCards.first()).toBeVisible();
+    const {currentBooking, bookingEventTitle} = await bookings.getBookingCard(bookingRefNum);
+    await expect(currentBooking).toBeVisible();
+    await expect(bookingEventTitle).toHaveText(adminEvents.eventTitle);
+
+    //Verify Seat Reduction
+    await bookings.navbar.events.click();
     await expect(page).toHaveURL(/.*\/events/);
-    await page.waitForLoadState('domcontentloaded');
-    await expect(events.newEvent).toBeVisible();
-    await expect(events.newEvent.getByText(/seats available/i))
-        .toHaveText(`${events.seatsBeforeBooking-1} seats available`,
-            {timeout : 20_000});
+    //await page.waitForLoadState('domcontentloaded');
+    await expect(currentEvent).toBeVisible();
+    await expect(currentEvent.getByText(/seats available/i))
+        .toHaveText(`${seatsBeforeBooking-1} seats available`);
 });

@@ -9,8 +9,11 @@ class Bookings{
     }
 
     async getBookingCard(bookingRefNum){
-        this.currentBooking = this.bookingCards.filter({hasText : bookingRefNum});
-        this.bookingEventTitle = this.currentBooking.getByRole('heading');
+        const currBooking = this.bookingCards.filter({hasText : bookingRefNum});
+        return({
+            currentBooking : currBooking,
+            bookingEventTitle : currBooking.getByRole('heading')
+        });
     }
 
 }
