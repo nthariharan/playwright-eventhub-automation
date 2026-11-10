@@ -16,4 +16,4 @@ End-to-end Playwright automation suite for [EventHub Practice Site](https://even
 ## Getting Started
 1. Clone the repository:
    ```bash
-   git clone https://github.com/nthariharanacademic-eng/playwright-eventhub-automation.git
+   git clone https://github.com/nthariharan/playwright-eventhub-automation.git
